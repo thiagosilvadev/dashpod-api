@@ -12,12 +12,15 @@ class AuthController extends Controller
         $this->middleware('auth:sanctum', ['except' => ['login']]);
     }
 
+    /**
+     * @unauthenticated
+     */
     public function login(LoginRequest $request)
     {
         if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
-            return response()->json([
+            return [
                 'token' => Auth::user()->createToken('token')->plainTextToken,
-            ]);
+            ];
         }
         abort(401);
     }
