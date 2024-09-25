@@ -19,7 +19,7 @@ class AuthController extends Controller
     {
         if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
             return [
-                'token' => Auth::user()->createToken('token')->plainTextToken,
+                'token' => Auth::user()->createToken('token', expiresAt: now()->addDays(7))->plainTextToken,
             ];
         }
         abort(401);

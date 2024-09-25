@@ -9,14 +9,14 @@ use Hash;
 final class CreateUser
 {
     public function __construct(
-        private readonly CreateUserDTO $payload
+
     ) {}
 
-    public function execute(): User
+    public function execute(CreateUserDTO $payload): User
     {
         return User::create([
-            ...$this->payload->except('password')->toArray(),
-            'password' => Hash::make($this->payload->password),
+            ...$payload->except('password')->toArray(),
+            'password' => Hash::make($payload->password),
         ]);
     }
 }

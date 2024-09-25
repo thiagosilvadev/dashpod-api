@@ -16,15 +16,13 @@ final class UsersController extends Controller
     }
 
     /**
-     *
-     * @param CreateUserRequest $request
      * @return UserResource
      *
      * @noinspection PhpDocSignatureInspection
      */
-    public function register(CreateUserRequest $request): JsonResponse
+    public function register(CreateUserRequest $request, CreateUser $action): JsonResponse
     {
-        $user = (new CreateUser(CreateUserDTO::from($request->all())))->execute();
+        $user = $action->execute(CreateUserDTO::from($request->all()));
 
         return (new UserResource($user))
             ->response()

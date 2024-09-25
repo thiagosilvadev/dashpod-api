@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PodcastsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('users')->group(function () {
     Route::post('/register', [UsersController::class, 'register'])->name('users.register');
     Route::get('/me', [UsersController::class, 'me'])->name('users.me');
+});
+
+Route::prefix('podcasts')->group(function () {
+    Route::post('/', [PodcastsController::class, 'create'])->name('podcasts.create');
 });

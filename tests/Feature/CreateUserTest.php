@@ -17,13 +17,14 @@ class CreateUserTest extends TestCase
      */
     public function test_should_create_user(): void
     {
+        $action = new CreateUser;
         $payload = CreateUserDTO::from([
             'password' => $this->faker->password(),
             'email' => $this->faker->email,
             'name' => $this->faker->name(),
         ]);
 
-        $user = (new CreateUser($payload))->execute();
+        $user = $action->execute($payload);
 
         $this->assertNotEmpty($user->id);
         $this->assertDatabaseHas('users', [
