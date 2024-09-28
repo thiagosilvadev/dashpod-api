@@ -8,6 +8,12 @@ use App\Modules\Podcast\DTO\CreatePodcastDTO;
 
 class PodcastsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+
     public function create(CreatePodcastRequest $request, CreatePodcast $action)
     {
         $podcast = $action->execute(CreatePodcastDTO::from([

@@ -33,4 +33,9 @@ class Podcast extends Model
     {
         return $this->hasMany(Membership::class, 'podcast_id');
     }
+
+    public function seasons(): HasMany
+    {
+        return $this->hasMany(Season::class, 'podcast_id');
+    }
 }
