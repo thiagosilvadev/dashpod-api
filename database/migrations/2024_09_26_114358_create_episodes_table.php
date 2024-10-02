@@ -15,8 +15,9 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('cover_url')->nullable();
             $table->string('audio_url');
-            $table->foreignId('season_id')->nullable()->constrained('seasons');
+            $table->foreignUuid('season_id')->nullable()->constrained('seasons');
             $table->foreignUuid('podcast_id')->constrained('podcasts');
+            $table->foreignUuid('created_by_user_id')->constrained('users');
             $table->timestamps(); //
         });
     }

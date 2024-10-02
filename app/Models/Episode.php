@@ -11,7 +11,7 @@ class Episode extends Model
     use HasUuids;
 
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     public function season(): BelongsTo
@@ -22,5 +22,10 @@ class Episode extends Model
     public function podcast(): BelongsTo
     {
         return $this->belongsTo(Podcast::class);
+    }
+
+    public function createdByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
