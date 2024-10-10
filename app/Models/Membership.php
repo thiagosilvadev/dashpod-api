@@ -6,10 +6,11 @@ use App\Models\Enums\MembershipRole;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Notifications\Notifiable;
 
 class Membership extends Model
 {
-    use HasUuids;
+    use HasUuids, Notifiable;
 
     protected $guarded = [
         'id',

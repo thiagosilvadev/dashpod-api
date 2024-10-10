@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EpisodesController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PodcastsController;
 use App\Http\Controllers\SeasonsController;
 use App\Http\Controllers\UsersController;
@@ -22,6 +23,8 @@ Route::prefix('users')->group(function () {
     Route::post('/register', [UsersController::class, 'register'])->name('users.register');
     Route::get('/me', [UsersController::class, 'me'])->name('users.me');
 });
+
+Route::get('/invites/{invite}', [MembershipController::class, 'createInvite'])->name('membership.create-invite')->middleware('signed');
 
 Route::prefix('podcasts')->group(function () {
     Route::post('/', [PodcastsController::class, 'create'])->name('podcasts.create');
