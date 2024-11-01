@@ -14,7 +14,7 @@ class CreateEpisodeRequest extends FormRequest
             'slug' => ['required', 'string'],
             'season_id' => ['nullable', 'string', 'exists:seasons,id'],
             'cover_url' => ['nullable', 'string'],
-            'audio_url' => ['nullable', 'string'],
+            'audio_url' => ['string'],
         ];
     }
 

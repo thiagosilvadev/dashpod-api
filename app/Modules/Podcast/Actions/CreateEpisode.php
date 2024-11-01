@@ -2,6 +2,7 @@
 
 namespace App\Modules\Podcast\Actions;
 
+use App\Events\EpisodeCreatedEvent;
 use App\Models\Episode;
 use App\Modules\Podcast\DTO\CreateEpisodeDTO;
 
@@ -9,7 +10,7 @@ final class CreateEpisode
 {
     public function execute(CreateEpisodeDTO $payload): Episode
     {
-        return Episode::create([
+        $episode = Episode::create([
             'name' => $payload->name,
             'description' => $payload->description,
             'slug' => $payload->slug,
@@ -20,5 +21,7 @@ final class CreateEpisode
             'season_id' => $payload->seasonId,
             'created_at' => now(),
         ]);
+        event(new EpisodeCreatedEvent($episode));
+        return $episode;
     }
 }

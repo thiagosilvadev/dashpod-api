@@ -1,11 +1,10 @@
 <?php
 
+
 use App\Http\Controllers\EpisodesController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PodcastsController;
-use App\Http\Controllers\SeasonsController;
 use App\Http\Controllers\UsersController;
-use App\Http\Middleware\MembershipMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,15 +27,7 @@ Route::get('/invites/{invite}', [MembershipController::class, 'createInvite'])->
 
 Route::prefix('podcasts')->group(function () {
     Route::post('/', [PodcastsController::class, 'create'])->name('podcasts.create');
-})->middleware('auth:sanctum');
-
-Route::prefix('/{membership}')->middleware(['auth:sanctum', MembershipMiddleware::class])->group(function () {
-    Route::prefix('/seasons')->group(function () {
-        Route::post('/', [SeasonsController::class, 'create'])->name('seasons.create');
-    });
-
-    Route::prefix('/episodes')->group(function () {
-        Route::post('/', [EpisodesController::class, 'create'])->name('episodes.create');
-    });
-
 });
+
+Route::post('episodes/{episode}/audio-status', [EpisodesController::class, 'audioStatus'])->name('episodes.audio-status');
+

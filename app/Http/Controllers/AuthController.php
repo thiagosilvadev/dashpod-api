@@ -9,7 +9,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     /**
@@ -17,18 +17,33 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
-            return [
-                'token' => Auth::user()->createToken('token', expiresAt: now()->addDays(7))->plainTextToken,
-            ];
+        if (!$token = Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
+            abort(401);
         }
-        abort(401);
+
+        return $this->respondWithToken($token);
+
     }
+
 
     public function logout()
     {
-        Auth::logout();
+        auth()->logout();
 
-        return response()->noContent();
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+        ]);
     }
 }
